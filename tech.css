@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+.menu {
+    display: flex;
+    justify-content: space-between;
+    background: rgb(74, 163, 223);
+
+
+}
+
+.navbar {
+    text-align: left;
+
+}
+
+.navbar ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 23px;
+    padding-top: 1px;
+
+}
+
+.navbar li a {
+    color: white;
+    text-decoration: none;
+
+}
+
+.search {
+    padding-left: 50px;
+    padding-top: 25px;
+}
+
+#search_hotels {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    font-size: 18px;
+    border: white;
+
+}
+
+.company {
+    padding-top: 16px;
+    font-size: 20px;
+    color: aliceblue;
+    font-family: 'Water Brush', cursive;
+    font-size: 30px;
+    font-weight: bold;
+
+}
+
+.submit-btn {
+    font-size: 18px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+.menu span {
+    color: black;
+}
+
+.home {
+    min-height: 100vh;
+    background:  linear-gradient(rgba(54, 58, 71, 0.7),rgba(46, 47, 52, 0.7)),url(img/g-2.jpg);
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+}
+
+.home .content {
+    text-align: center;
+    transform: translateY(50%);
+}
+
+.home .content h3 {
+    font-size: 4.5rem;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 .3rem .5rem rgba(0, 0, 0, .1);
+}
+
+.home .content p {
+    font-size: 2.5rem;
+    color: #fff;
+    padding: .5rem 0;
+}
+.btn{
+    display: inline-block;
+    margin-top:1rem;
+    
+    color:#fff;
+    padding:.8rem 3rem;
+    border: .2rem solid cornflowerblue;
+    cursor:pointer;
+    font-size: 1.7rem;
+    color:cornflowerblue;
+}
+
+.btn:hover{
+    background-color: cornflowerblue;
+    transition:0.8s;
+    color:white;
+    
+}
+ .box-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap:1.5rem;
+    
+    
+}
+
+.packages .box-container .box{
+    flex: 1 1 30rem;
+    border-radius: .5rem;
+    overflow: hidden;
+    box-shadow: 0 1rem 2rem rgba(0,0,0,.1);
+}
+
+.packages .box-container .box img{
+    height:25rem;
+    width: auto;
+    object-fit: cover;
+}
+
+.packages .box-container .box .content{
+    padding:2rem;
+}
+
+.packages .box-container .box .content h3{
+    font-size:2rem;
+    color: #333;
+}
+
+.packages .box-container .box .content h3 i{
+    color: var(--orange);
+}
+
+.packages .box-container .box .content p{
+    font-size:1.7rem;
+    color: #666;
+    padding:1rem 0;
+}
+
+.packages .box-container .box .content .stars i{
+    font-size:1.7rem;
+    color: var(--orange);
+}
+
+.packages .box-container .box .content .price{
+    font-size: 2rem;
+    color: #333;
+    padding: 1rem;
+}
+
+.packages .box-container .box .content .price span{
+    color: #666;
+    font-size: 1.5rem;
+    
+}
+.heading{
+    text-align: center;
+    padding:2.5rem 0;
+}
+
