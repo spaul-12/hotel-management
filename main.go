@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/task/database"
 )
 
 func main() {
@@ -11,6 +12,8 @@ func main() {
 		err := c.SendString("And the API is UP!")
 		return err
 	})
+
+	database.ConnectDB()
 
 	// Listen on PORT 3000
 	app.Listen(":3000")
