@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/task/config"
+	"github.com/task/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -32,4 +33,7 @@ func ConnectDB() {
 	}
 
 	fmt.Println("Connection to Database successful")
+
+	log.Print("Running the migrations...")
+	DB.AutoMigrate(&models.User{}, &models.Claims{})
 }
