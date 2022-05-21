@@ -21,15 +21,16 @@ import (
 func main() {
 
 	app := fiber.New()
-	app.Get("/", func(c *fiber.Ctx) error {
+	/*app.Get("/", func(c *fiber.Ctx) error {
 		err := c.SendString("And the API is UP!")
 		return err
-	})
+	})*/
 
 	database.ConnectDB()
 
 	router.SetupRoutes(app)
 
+	app.Static("/", "./fend")
 	// Listen on PORT 3000
 	app.Listen(":3000")
 

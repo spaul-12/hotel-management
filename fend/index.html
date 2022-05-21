@@ -7,11 +7,13 @@
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="824660188978-jbeb8eji6dkpuipoilctoh693fv30soi.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://kit.fontawesome.com/60aa7c3b31.js" crossorigin="anonymous"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Water+Brush&display=swap" rel="stylesheet">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ -->
     <link rel="stylesheet" href="tech.css">
-    <script src="https://kit.fontawesome.com/60aa7c3b31.js" crossorigin="anonymous"></script>
     <title>Hotel-Management system</title>
 </head>
 <body>
@@ -31,7 +33,8 @@
 
                 <li><a href="">Home</a> </li>
                 <li><a href="#packages">packages</a> </li>
-                <li class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></li> 
+                <li><button class="sign-up" id="sign-up">Sign-up</button></li>
+                <!-- <li class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></li> --> 
             </ul>
         </nav>
         
@@ -45,6 +48,37 @@
             <p>dicover new places with us, luxury awaits</p>
             <a href="#" class="btn">Discover more</a>
         </div>
+
+        <div class="modal" id="modal">
+            <button class="close" id="close_btn">&times;</button>
+    
+            
+            <div class="google">
+
+                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+            </div>
+            
+            <div class="details">
+                <div class="user_detail">
+
+                    <h3>Username:</h3>
+    
+                    <input type="text" name="" id="username">
+                </div>
+                <div class="user_detail">
+
+                    <h3>Email:</h3>
+                    <input type="text" name="" id="email">
+                </div>
+                <div class="user_detail">
+
+                    <h3>Password:</h3>
+                    <input type="text" name="" id="password">
+                </div>
+
+            </div>
+        </div>
+        
     
          
     </div>
@@ -158,6 +192,7 @@
             </div>
         </div>
     </section>    
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
     <script src="tech.js"></script>
 </body>
 </html>

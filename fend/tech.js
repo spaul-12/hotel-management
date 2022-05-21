@@ -13,3 +13,16 @@ function onSignIn(googleUser) {
     console.log("ID Token: " + id_token);
   }
   
+  const modal_btn=document.getElementById("sign-up");
+  const close_btn=document.getElementById('close_btn');
+  const modal=document.getElementById("modal");
+
+  modal_btn.addEventListener('click',()=>{
+    console.log(modal);
+    modal.classList.add('active');
+    
+  });
+
+  close_btn.addEventListener('click',()=>{
+    modal.classList.remove('active');
+  });

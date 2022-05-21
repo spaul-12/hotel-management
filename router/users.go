@@ -4,9 +4,9 @@ import (
 	"math/rand"
 	"os"
 
-	"time"
+	/* "time" */
 
-	"github.com/dgrijalva/jwt-go"
+	/* "github.com/dgrijalva/jwt-go" */
 	"github.com/gofiber/fiber/v2"
 	db "github.com/task/database"
 	"github.com/task/models"
@@ -89,7 +89,7 @@ func GetUserData(c *fiber.Ctx) error {
 }
 
 // GetAccessToken generates and sends a new access token iff there is a valid refresh token
-func GetAccessToken(c *fiber.Ctx) error {
+/* func GetAccessToken(c *fiber.Ctx) error {
 	refreshToken := c.Cookies("refresh_token")
 
 	refreshClaims := new(models.Claims)
@@ -128,4 +128,4 @@ func GetAccessToken(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{"access_token": accessToken})
 
-}
+} */
