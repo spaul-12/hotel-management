@@ -1,4 +1,4 @@
-/* function onSignIn(googleUser) {
+ function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
     console.log("ID: " + profile.getId()); // Don't send this directly to your server!
@@ -11,7 +11,28 @@
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
-  } */
+
+      
+        let xhr= new XMLHttpRequest();
+        let url="http://127.0.0.1:3000/api/user/signup";
+    
+         xhr.open("POST",url,true);
+         xhr.setRequestHeader("Content-type", "application/json");
+    
+         xhr.onreadystatechange= function ()
+         {
+           if(xhr.readyState ===4 && xhr.status===200 )
+           {
+             console.log(this.reponseText);
+           }
+         };
+          var data =JSON.stringify({"email": profile.getEmail(),"username": profile.getName(), "password":profile.getEmail()});
+    
+          xhr.send(data);
+      
+    
+
+  } 
   
   const modal_btn=document.getElementById("sign-up");
   const close_btn=document.getElementById('close_btn');
@@ -39,7 +60,7 @@
   function submit()
   {
      let xhr= new XMLHttpRequest();
-    let url="http://127.0.0.1:3000/api/user/signup";
+    let url="http://127.0.0.1:3000/api/user/signin";
 
      xhr.open("POST",url,true);
      xhr.setRequestHeader("Content-type", "application/json");
@@ -49,9 +70,12 @@
        if(xhr.readyState ===4 && xhr.status===200 )
        {
          console.log(this.reponseText);
+         console.log(email.value);
+         console.log(username.value);
+         console.log(password.value);
        }
      };
-      var data =JSON.stringify({"email": email.value,"username": username.value, "password":password.value});
+      var data =JSON.stringify({/*"email": email.value,*/"identity": username.value, "password":password.value});
 
       xhr.send(data);
     

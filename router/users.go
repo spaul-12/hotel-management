@@ -4,9 +4,9 @@ import (
 	"math/rand"
 	"os"
 
-	/* "time" */
+	"time"
 
-	/* "github.com/dgrijalva/jwt-go" */
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 	db "github.com/task/database"
 	"github.com/task/models"
@@ -18,7 +18,15 @@ var jwtKey = []byte(os.Getenv("PRIV_KEY"))
 
 // SetupUserRoutes func sets up all the user routes
 func SetupUserRoutes() {
-	USER.Post("/signup", CreateUser) // Sign Up a user
+	USER.Post("/signup", CreateUser)              // Sign Up a user
+	USER.Post("/signin", LoginUser)               // Sign In a user
+	USER.Get("/get-access-token", GetAccessToken) // returns a new access_token
+	USER.Get("/authenticated", hello)
+
+	// privUser handles all the private user routes that requires authentication
+	privUser := USER.Group("/private")
+	privUser.Use(util.SecureAuth()) // middleware to secure all routes for this group
+	privUser.Get("/user", GetUserData)
 
 }
 
@@ -89,7 +97,7 @@ func GetUserData(c *fiber.Ctx) error {
 }
 
 // GetAccessToken generates and sends a new access token iff there is a valid refresh token
-/* func GetAccessToken(c *fiber.Ctx) error {
+func GetAccessToken(c *fiber.Ctx) error {
 	refreshToken := c.Cookies("refresh_token")
 
 	refreshClaims := new(models.Claims)
@@ -128,4 +136,42 @@ func GetUserData(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{"access_token": accessToken})
 
-} */
+}
+
+func LoginUser(c *fiber.Ctx) error {
+	type LoginInput struct {
+		Identity string `json:"identity"`
+		Password string `json:"password"`
+	}
+
+	input := new(LoginInput)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.JSON(fiber.Map{"error": true, "input": "Please review your input"})
+	}
+	// check if a user exists
+	u := new(models.User)
+	if res := db.DB.Where(
+		&models.User{Email: input.Identity}).Or(
+		&models.User{Username: input.Identity},
+	).First(&u); res.RowsAffected <= 0 {
+		return c.JSON(fiber.Map{"error": true, "general": "Invalid Credentials."})
+	}
+
+	// Comparing the password with the hash
+	if err := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(input.Password)); err != nil {
+		return c.JSON(fiber.Map{"error": true, "general": "Invalid Credentials."})
+	}
+	// setting up the authorization cookies
+	accessToken, refreshToken := util.GenerateTokens(u.UUID.String())
+	accessCookie, refreshCookie := util.GetAuthCookies(accessToken, refreshToken)
+	c.Cookie(accessCookie)
+	c.Cookie(refreshCookie)
+
+	c.Redirect("http://127.0.0.1:3000/api/user/authenticated", 301)
+
+	return c.Status(fiber.StatusOK).JSON(fiber.Map{
+		"access_token":  accessToken,
+		"refresh_token": refreshToken,
+	})
+}

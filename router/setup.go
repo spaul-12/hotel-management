@@ -19,4 +19,5 @@ func SetupRoutes(app *fiber.App) {
 	SetupUserRoutes()
 
 	api.Get("/", hello)
+
 }
