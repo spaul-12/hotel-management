@@ -25,10 +25,21 @@ type Claims struct {
 	ID uint `gorm:"primaryKey"`
 }
 
-type detail struct {
-	user   string `json:"username"`
-	id     string `json:"hotelid"`
-	roomno string `json:"roomno"`
-	food   string `json:food`
-	price  uint64 `json:"price"`
+// detail contains the details of each hotel
+type Detail struct {
+	Id       string `json:"hotelid"`
+	Roomfree uint64 `json:"roomfree"`
+	Food     string `json:"food"`
+	Price    uint64 `json:"price"`
+}
+
+// booking struct contains the details of hotel booked by the user
+type Booking struct {
+	User      string `json:"username"`
+	Id        string `json:"hotelid"`
+	EntryDate string `json:"entrydate"`
+	ExitDate  string `json:"exitdate"`
+	Roomtype  string `json:"roomtype"`
+	Rooms     uint64 `json:"roomno"` //no of rooms
+	Price     uint64 `json:"price"`
 }
