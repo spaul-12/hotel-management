@@ -24,3 +24,11 @@ type Claims struct {
 	jwt.StandardClaims
 	ID uint `gorm:"primaryKey"`
 }
+
+type detail struct {
+	user   string `json:"username"`
+	id     string `json:"hotelid"`
+	roomno string `json:"roomno"`
+	food   string `json:food`
+	price  uint64 `json:"price"`
+}

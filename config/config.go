@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 )
 
 func Config(key string) string {
@@ -15,4 +17,16 @@ func Config(key string) string {
 	}
 
 	return os.Getenv(key)
+}
+
+func ConfigSetup() *oauth2.Config {
+	conf := &oauth2.Config{
+		RedirectURL:  "http://localhost:3000/api/oauth2/callback",
+		ClientID:     Config("Client_ID"),
+		ClientSecret: Config("Client_Secret"),
+		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+		Endpoint:     google.Endpoint,
+	}
+	return conf
+
 }

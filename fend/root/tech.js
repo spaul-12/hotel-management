@@ -60,7 +60,7 @@
   function submit()
   {
      let xhr= new XMLHttpRequest();
-    let url="http://127.0.0.1:3000/api/user/signin";
+    let url="http://127.0.0.1:3000/api/user/signup";
 
      xhr.open("POST",url,true);
      xhr.setRequestHeader("Content-type", "application/json");
@@ -75,7 +75,7 @@
          console.log(password.value);
        }
      };
-      var data =JSON.stringify({/*"email": email.value,*/"identity": username.value, "password":password.value});
+      var data =JSON.stringify({"email": email.value, "username": username.value, "password":password.value});
 
       xhr.send(data);
     

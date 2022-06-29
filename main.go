@@ -1,9 +1,10 @@
 package main
 
 import (
+	/*"context"
 	"fmt"
 	"io/ioutil"
-	"net/http"
+	"net/http"*/
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/task/config"
@@ -15,10 +16,10 @@ import (
 
 var (
 	googleOauthConfig = &oauth2.Config{
-		RedirectURL:  "http://localhost:3000/callback",
+		RedirectURL:  "http://localhost:3000/api/oauth2/callback",
 		ClientID:     config.Config("Client_ID"),
 		ClientSecret: config.Config("Client_Secret"),
-		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email"},
+		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
 		Endpoint:     google.Endpoint,
 	}
 	randomState = "random"
@@ -32,45 +33,48 @@ func main() {
 
 	router.SetupRoutes(app)
 
-	app.Static("/", "./fend")
-	http.HandleFunc("/callback", handlecallback)
+	app.Static("/", "./fend/root")
+	app.Static("/api/user/private/user", "./fend/private")
+	//http.HandleFunc("/google/login", Login)
+	//http.HandleFunc("/api/oauth2/callback", Callback)
 
 	// Listen on PORT 3000
 	app.Listen(":3000")
+	//http.ListenAndServe(":3000", nil)
 
 }
 
-func handlecallback(w http.ResponseWriter, r *http.Request) {
-	content, err := getUserInfo(r.FormValue("state"), r.FormValue("code"))
-	if err != nil {
-		fmt.Println(err.Error())
-		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+/*func Login(res http.ResponseWriter, req *http.Request) {
+	googleConfig := config.ConfigSetup()
+	url := googleConfig.AuthCodeURL("state")
+	http.Redirect(res, req, url, http.StatusSeeOther)
+}
+func Callback(res http.ResponseWriter, req *http.Request) {
+	state := req.URL.Query()["state"][0]
+	if state != "state" {
+		fmt.Fprintln(res, "States Invalid")
 		return
 	}
 
-	fmt.Println(w, "Content: %s\n", content)
-}
-
-func getUserInfo(state string, code string) ([]byte, error) {
-	if state != randomState {
-		return nil, fmt.Errorf("invalid oauth state")
-	}
-
-	token, err := googleOauthConfig.Exchange(oauth2.NoContext, code)
+	code := req.URL.Query()["code"][0]
+	googleConfig := config.ConfigSetup()
+	token, err := googleConfig.Exchange(context.Background(), code)
 	if err != nil {
-		return nil, fmt.Errorf("code exchange failed: %s", err.Error())
+		fmt.Fprintln(res, "Code-Token Exchange Failed")
+		return
 	}
 
-	response, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
+	resp, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
 	if err != nil {
-		return nil, fmt.Errorf("failed getting user info: %s", err.Error())
+		fmt.Fprintln(res, "User Data fetch Failed")
+		return
 	}
 
-	defer response.Body.Close()
-	contents, err := ioutil.ReadAll(response.Body)
+	userData, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("failed reading response body: %s", err.Error())
+		fmt.Fprintln(res, "User Data parsing Failed")
+		return
 	}
 
-	return contents, nil
-}
+	fmt.Fprintln(res, string(userData))
+}*/
