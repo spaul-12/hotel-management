@@ -37,9 +37,13 @@ type Detail struct {
 type Booking struct {
 	User      string `json:"username"`
 	Id        string `json:"hotelid"`
+	Adult     uint64 `json:"adult"`    // no of adults
+	Children  uint64 `json:"children"` //no of children
 	EntryDate string `json:"entrydate"`
 	ExitDate  string `json:"exitdate"`
 	Roomtype  string `json:"roomtype"`
 	Rooms     uint64 `json:"roomno"` //no of rooms
 	Price     uint64 `json:"price"`
 }
+
+var VerifiedUser string

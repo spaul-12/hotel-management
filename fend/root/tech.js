@@ -33,7 +33,7 @@
     
 
   } 
-  
+ /* 
   const modal_btn=document.getElementById("sign-up");
   const close_btn=document.getElementById('close_btn');
   const modal=document.getElementById("modal");
@@ -79,4 +79,4 @@
 
       xhr.send(data);
     
-  }
+  }*/

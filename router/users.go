@@ -11,6 +11,7 @@ import (
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
+	"github.com/task/private"
 
 	//"github.com/task/config"
 	db "github.com/task/database"
@@ -34,6 +35,8 @@ func SetupUserRoutes() {
 	privUser := USER.Group("/private")
 	privUser.Use(util.SecureAuth()) // middleware to secure all routes for this group
 	privUser.Get("/user", GetUserData)
+	privUser.Post("/addentry", private.CreateEntry)
+	privUser.Post("/deleteentry", private.DeleteEntry)
 
 }
 
