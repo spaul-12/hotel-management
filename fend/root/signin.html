@@ -13,16 +13,17 @@
         <br>
         <input type="password" name="password" id="i2" placeholder="password">
         <br>
-        <input type="email" name="email" id="" placeholder="email">
+        <!-- <input type="email" name="email" id="" placeholder="email"> -->
         <button type="submit">Submit</button>
     </form>
+    <p>Not registered ? <span><a href="signup.html">Sign-Up</a></span></p>
     <script>
         const form = document.querySelector('form')
         form.addEventListener('submit', async (e) => {
             e.preventDefault()
             const username = form.username.value
             const password = form.password.value
-            const email = form.email.value
+            //const email = form.email.value
             try {
                 const res = await fetch('/api/user/signin', {
                     method: 'POST',

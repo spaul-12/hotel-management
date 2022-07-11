@@ -33,6 +33,7 @@ func CreateEntry(c *fiber.Ctx) error {
 			"status": "incorrect input",
 		})
 	}
+	//var name string = "hello"
 	//fmt.Println(models.VerifiedUser)
 	item := models.Booking{
 		User:      fmt.Sprint(models.VerifiedUser),
@@ -81,7 +82,7 @@ func DeleteEntry(c *fiber.Ctx) error {
 
 	item := new(models.Booking)
 
-	if res := db.DB.Where("\"user\" = ? AND bookid = ? AND isbn = ?", models.VerifiedUser, input.Bookid, input.Isbn).Delete(&item); res.RowsAffected <= 0 {
+	if res := db.DB.Where("\"user\" = ? AND bookid =  AND isbn = ", models.VerifiedUser).Delete(&item); res.RowsAffected <= 0 {
 		return c.JSON(fiber.Map{
 			"msg": "invalid input",
 		})

@@ -85,7 +85,7 @@ func CreateUser(c *fiber.Ctx) error {
 	}
 
 	// setting up the authorization cookies
-	accessToken, refreshToken := util.GenerateTokens(u.UUID.String())
+	/*accessToken, refreshToken := util.GenerateTokens(u.UUID.String())
 	accessCookie, refreshCookie := util.GetAuthCookies(accessToken, refreshToken)
 	c.Cookie(accessCookie)
 	c.Cookie(refreshCookie)
@@ -184,6 +184,8 @@ func LoginUser(c *fiber.Ctx) error {
 		"access_token":  accessToken,
 		"refresh_token": refreshToken,
 	})*/
+
+	models.VerifiedUser = input.Identity
 	return c.Redirect("/api/user/private/user", 301)
 }
 
