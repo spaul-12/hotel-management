@@ -55,6 +55,13 @@ func CreateEntry(c *fiber.Ctx) error {
 			"error": err,
 			"msg":   "Something went wrong, please try again later. 😕",
 		})
+
+	} else {
+		count := db.DB.Table("details").Select("roomfree").Where("id = ?", input.Id)
+
+		db.DB.Table("details").Where("id = ?", input.Id).Update("roomfree", 9)
+		fmt.Println(count)
+
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
@@ -66,10 +73,7 @@ func CreateEntry(c *fiber.Ctx) error {
 func DeleteEntry(c *fiber.Ctx) error {
 
 	type iteminput struct {
-		Bookid   uint32 `json:"bookid"`
-		Bookname string `json:"bookname"`
-		Isbn     string `json:"isbn"`
-		Price    uint64 `json:"price"`
+		Id string `json:"hotelid"`
 	}
 
 	input := new(iteminput)
@@ -79,10 +83,11 @@ func DeleteEntry(c *fiber.Ctx) error {
 			"status": "incorrect input",
 		})
 	}
+	fmt.Println(input.Id)
+	fmt.Println(models.VerifiedUser)
+	//item := new(models.Booking)
 
-	item := new(models.Booking)
-
-	if res := db.DB.Where("\"user\" = ? AND bookid =  AND isbn = ", models.VerifiedUser).Delete(&item); res.RowsAffected <= 0 {
+	if res := db.DB.Where("\"user\" = ? AND Id = ?", models.VerifiedUser, input.Id).Delete(&models.Booking{}); res.RowsAffected <= 0 {
 		return c.JSON(fiber.Map{
 			"msg": "invalid input",
 		})

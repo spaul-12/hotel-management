@@ -2,7 +2,6 @@ const book = document.getElementById('book')
 book.addEventListener("click", Booking)
 
 
-
 function Booking() {
     let xhr = new XMLHttpRequest();
     let url = "http://127.0.0.1:3000/api/user/private/addentry";
@@ -20,9 +19,9 @@ function Booking() {
 
         }
     };
-    let id="B1234";
-    let entrydate="458";
-    let exitdate="0875";
+    let id="h1";
+    let entrydate="0708";
+    let exitdate="0807";
     let type="deluxe";
     var data = JSON.stringify({
         "hotelid": id,
@@ -38,6 +37,38 @@ function Booking() {
     xhr.send(data);
 }
 
+/*---------cancellation---------------*/
+
+
+const cancel=document.getElementById('cancelorder')
+cancel.addEventListener('click',Cancellation)
+
+
+function Cancellation() {
+    console.log("cancellation working");
+   
+let xhr=new XMLHttpRequest();
+let url ="http://127.0.0.1:3000/api/user/private/deleteentry";
+
+xhr.open("POST",url,true);
+xhr.setRequestHeader("Content-type","application/json");
+
+xhr.onreadystatechange = function () {
+    if(xhr.readyState === 4 && xhr.status === 200)
+    {console.log("ok");
+    console.log(this.responseText);}
+
+};
+
+let id="B1712";
+ 
+var data=JSON.stringify({
+    "hotelid" : id
+});
+
+xhr.send(data);
+ 
+}
 
 
 
