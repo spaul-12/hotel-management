@@ -16,7 +16,7 @@ import (
 
 var (
 	googleOauthConfig = &oauth2.Config{
-		RedirectURL:  "http://localhost:3000/api/oauth2/callback",
+		RedirectURL:  "http://localhost:3000/api/user/callback",
 		ClientID:     config.Config("Client_ID"),
 		ClientSecret: config.Config("Client_Secret"),
 		Scopes:       []string{"https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"},
@@ -34,13 +34,12 @@ func main() {
 	router.SetupRoutes(app)
 
 	app.Static("/", "./fend/root")
-	app.Static("/api/user/private/user", "./fend/private")
+	app.Static("/api/user/private/", "./fend/private")
 	//http.HandleFunc("/google/login", Login)
 	//http.HandleFunc("/api/oauth2/callback", Callback)
 
 	// Listen on PORT 3000
 	app.Listen(":3000")
-	//http.ListenAndServe(":3000", nil)
 
 }
 

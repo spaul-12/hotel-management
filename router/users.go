@@ -1,11 +1,14 @@
 package router
 
 import (
-	//"context"
-	//"fmt"
-	//"io/ioutil"
-	"math/rand"
-	//"net/http"
+	"context"
+	"encoding/json"
+
+	"io/ioutil"
+
+	"fmt"
+
+	"net/http"
 	"os"
 	"time"
 
@@ -13,7 +16,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/task/private"
 
-	//"github.com/task/config"
+	"github.com/task/config"
 	db "github.com/task/database"
 	"github.com/task/models"
 	"github.com/task/util"
@@ -28,15 +31,16 @@ func SetupUserRoutes() {
 	USER.Post("/signin", LoginUser)               // Sign In a user
 	USER.Get("/get-access-token", GetAccessToken) // returns a new access_token
 
-	//USER.Post("/google/login", Login)
-	//USER.Post("/api/oauth2/callback", Callback)
+	USER.Get("/google/login", Login)
+	USER.Get("/callback", Callback)
 
 	// privUser handles all the private user routes that requires authentication
 	privUser := USER.Group("/private")
 	privUser.Use(util.SecureAuth()) // middleware to secure all routes for this group
-	privUser.Get("/user", GetUserData)
+	//privUser.Get("/user", GetUserData)
 	privUser.Post("/addentry", private.CreateEntry)
 	privUser.Post("/deleteentry", private.DeleteEntry)
+	privUser.Get("/logout", Logout)
 
 }
 
@@ -70,7 +74,7 @@ func CreateUser(c *fiber.Ctx) error {
 	password := []byte(u.Password)
 	hashedPassword, err := bcrypt.GenerateFromPassword(
 		password,
-		rand.Intn(bcrypt.MaxCost-bcrypt.MinCost)+bcrypt.MinCost,
+		8,
 	)
 
 	if err != nil {
@@ -186,11 +190,11 @@ func LoginUser(c *fiber.Ctx) error {
 	})*/
 
 	models.VerifiedUser = input.Identity
-	return c.Redirect("/api/user/private/user", 301)
+	return c.Redirect("/api/user/private/", 301)
 }
 
 //googleoauth functions
-/*func Login(c *fiber.Ctx) error {
+func Login(c *fiber.Ctx) error {
 	googleConfig := config.ConfigSetup()
 	url := googleConfig.AuthCodeURL("state")
 	return c.Redirect(url, 301)
@@ -200,34 +204,73 @@ func Callback(c *fiber.Ctx) error {
 
 	state := c.Query("state")
 	if state != "state" {
-		//fmt.Fprintln(res, "States Invalid")
-		return c.SendString(("states Invalid"))
+		fmt.Println("States Invalid")
+		return nil
 	}
 
 	code := c.Query("code")
 	googleConfig := config.ConfigSetup()
 	token, err := googleConfig.Exchange(context.Background(), code)
 	if err != nil {
-		//fmt.Fprintln(res, "Code-Token Exchange Failed")
-		return c.SendString(("Code-Token Exchange Failed"))
+		fmt.Println("Code-Token Exchange Failed")
+		fmt.Println(err.Error())
+		return nil
 	}
 
-	app := fiber.New()
-
-	app.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token="+token.AccessToken, func(c *fiber.Ctx) error {
-
-	})
 	resp, err := http.Get("https://www.googleapis.com/oauth2/v2/userinfo?access_token=" + token.AccessToken)
 	if err != nil {
-		//fmt.Fprintln(res, "User Data fetch Failed")
-		return c.SendString("User Data fetch Failed")
+		fmt.Println("User Data fetch Failed")
+		return nil
 	}
 
-	//userData, err := ioutil.ReadAll(resp.Body)
+	defer resp.Body.Close()
+
+	userData, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		//fmt.Fprintln(res, "User Data parsing Failed")
-		return c.SendString("USER DATA PARSING FAILED")
+		fmt.Println("User Data parsing Failed")
+		return nil
 	}
+	resStr := string(userData)
+	fmt.Println(resStr)
+	resBytes := []byte(resStr)
+	var userdata map[string]interface{}
+	if err := json.Unmarshal(resBytes, &userdata); err != nil {
+		fmt.Println("could not parse data")
+		return nil
+	}
+	username := userdata["name"].(string)
+	email := userdata["email"].(string)
+	fmt.Println(username)
+	fmt.Println(email)
 
-	fmt.Fprintln(res, string(userData))
-}*/
+	accessToken, refreshToken := util.GenerateTokens(username)
+	accessCookie, refreshCookie := util.GetAuthCookies(accessToken, refreshToken)
+
+	c.Cookie(refreshCookie)
+
+	c.Cookie(accessCookie)
+	c.Cookie(&fiber.Cookie{
+		Name:     "username",
+		Value:    username,
+		HTTPOnly: true,
+		Secure:   true,
+	})
+	return c.Redirect("/api/user/private/", 301)
+
+}
+
+func Logout(c *fiber.Ctx) error {
+
+	/* cookie := new(fiber.Cookie)
+	cookie.Name = "access_token"
+	cookie.Expires = time.Now().Add(1 * time.Second)
+
+	c.Cookie(cookie)
+
+	c.Redirect("/", 301) */
+
+	fmt.Println("cleared cookie")
+	c.ClearCookie("access_token", "refresh_token")
+
+	return c.Redirect("/", 301)
+}

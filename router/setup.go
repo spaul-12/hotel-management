@@ -18,6 +18,4 @@ func SetupRoutes(app *fiber.App) {
 	USER = api.Group("/user")
 	SetupUserRoutes()
 
-	api.Get("/", hello)
-
 }

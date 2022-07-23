@@ -60,7 +60,7 @@ xhr.onreadystatechange = function () {
 
 };
 
-let id="B1712";
+let id="h1";
  
 var data=JSON.stringify({
     "hotelid" : id
@@ -69,6 +69,31 @@ var data=JSON.stringify({
 xhr.send(data);
  
 }
+
+/* ----------------logout function------------------- */
+
+const logout=document.getElementById("logout");
+logout.addEventListener('click', async(e)=>{
+    e.preventDefault()
+
+    try{
+
+        const res= await fetch('/api/user/private/logout',{
+            method:'GET',
+            redirect:"follow"
+        })
+
+        const data=await res
+        console.log(data)
+        if(data.redirect)
+        {
+            location.assign(data.url)
+        }
+    }catch(e)
+    {
+        console.log(e)
+    }
+})
 
 
 

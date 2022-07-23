@@ -48,20 +48,36 @@ func CreateEntry(c *fiber.Ctx) error {
 	}
 
 	fmt.Println(item)
+	fmt.Println(input.Rooms)
 
-	err := db.DB.Create(&item)
+	var count uint64
+
+	res := db.DB.Select("roomfree").Where("id = ?", input.Id).Find(&models.Detail{})
+	res.Scan(&count)
+	fmt.Println(count)
+
+	if count < input.Rooms {
+		return c.JSON(fiber.Map{
+			"error": true,
+			"msg":   "no room available",
+		})
+	}
+
+	err := db.DB.Create(&item).Error
 	if err != nil {
 		return c.JSON(fiber.Map{
 			"error": err,
 			"msg":   "Something went wrong, please try again later. 😕",
 		})
 
-	} else {
-		count := db.DB.Table("details").Select("roomfree").Where("id = ?", input.Id)
+	}
 
-		db.DB.Table("details").Where("id = ?", input.Id).Update("roomfree", 9)
-		fmt.Println(count)
+	count = count - input.Rooms
+	fmt.Println(count)
 
+	error := db.DB.Table("details").Where("id = ?", input.Id).Update("roomfree", count).Error
+	if error != nil {
+		fmt.Println(error)
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
@@ -84,13 +100,22 @@ func DeleteEntry(c *fiber.Ctx) error {
 		})
 	}
 	fmt.Println(input.Id)
-	fmt.Println(models.VerifiedUser)
-	//item := new(models.Booking)
+
+	var amount uint64
+	db.DB.Table("bookings").Select("rooms").Where("\"user\" = ? AND Id = ?", models.VerifiedUser, input.Id).Scan(&amount)
+	fmt.Println(amount)
 
 	if res := db.DB.Where("\"user\" = ? AND Id = ?", models.VerifiedUser, input.Id).Delete(&models.Booking{}); res.RowsAffected <= 0 {
 		return c.JSON(fiber.Map{
 			"msg": "invalid input",
 		})
+	} else {
+		var count uint64
+		db.DB.Table("details").Select("roomfree").Where("Id = ?", input.Id).Scan(&count)
+
+		count = count + amount
+		fmt.Println(count)
+		db.DB.Table("details").Where("Id = ?", input.Id).Update("roomfree", count)
 	}
 
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{

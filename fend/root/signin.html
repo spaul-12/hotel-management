@@ -4,26 +4,93 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign-in</title>
+    <style>
+          body{
+            background:url(bg.jpg);
+            background-size: cover;
+        }
+      .signin{
+        position: absolute;
+        width: 500px;
+        top:45%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+       
+      }
+      h1{
+        padding-left:150px;
+        color: white;
+      
+      }
+      #i1{
+        margin:5px;
+        margin-bottom: 15px;
+        border:none;
+        border-bottom: 3px solid coral;
+        width: 80%;
+        outline:none;
+        background: none;
+        color:aliceblue;
+        padding: 10px;
+    }
+    #i2{
+        margin:5px;
+        margin-bottom: 15px;
+        border:none;
+        border-bottom: 3px solid coral;
+        width: 80%;
+        outline:none;
+        background: none;
+        padding: 10px;
+      }
+    #btn{
+       margin-top: 20px;
+        width: 80%;
+        background: none;
+        border-color: coral;
+        color: coral;
+        padding: 10px;
+        border-radius: 20px;
+        
+    }
+    #btn:hover{
+        border:none;
+        background: coral;
+        color:white;
+        transition: 0.8s;
+    }
+    .signin p{
+        color:white
+    }
+    p a{
+        color: white;
+    }
+
+    </style>
+    
 </head>
 <body>
-    <h1>SignIn</h1>
-    <form action="POST">
-        <input type="text" name="username" id="i1" placeholder="username">
-        <br>
-        <input type="password" name="password" id="i2" placeholder="password">
-        <br>
-        <!-- <input type="email" name="email" id="" placeholder="email"> -->
-        <button type="submit">Submit</button>
-    </form>
-    <p>Not registered ? <span><a href="signup.html">Sign-Up</a></span></p>
+    <div class="signin">
+
+        <h1>SignIn</h1>
+        <form action="POST">
+            <input type="text" name="username" id="i1" placeholder="username">
+            <br>
+            <input type="password" name="password" id="i2" placeholder="password">
+            <br>
+            <!-- <input type="email" name="email" id="" placeholder="email"> -->
+            <button id="btn" type="submit">Submit</button>
+        </form>
+        <p>Not registered ? <span><a href="signup.html">Sign-Up</a></span></p>
+    </div>
     <script>
         const form = document.querySelector('form')
         form.addEventListener('submit', async (e) => {
             e.preventDefault()
             const username = form.username.value
             const password = form.password.value
-            //const email = form.email.value
+           
             try {
                 const res = await fetch('/api/user/signin', {
                     method: 'POST',
@@ -31,14 +98,14 @@
                     body: JSON.stringify({
                         identity: username,
                         password: password,
-                    // email: email
+                   
                     }),
                     headers: {
                         'Content-Type':'application/json'
                     }
                 })
                 const data = await res
-                //console.log(data)
+                console.log(data)
                 if(data.redirected){
                     location.assign(data.url)
                 }
