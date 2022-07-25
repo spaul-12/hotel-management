@@ -28,6 +28,7 @@ type Claims struct {
 // detail contains the details of each hotel
 type Detail struct {
 	Id       string `json:"hotelid"`
+	Name     string `json:"hotelname"`
 	Roomfree uint64 `json:"roomfree"`
 	Food     string `json:"food"`
 	Price    uint64 `json:"price"`

@@ -134,3 +134,21 @@ logout.addEventListener('click', async(e)=>{
        console.log(e) 
     }
 })*/
+
+function displayname(){
+
+    const res=await fetch('/api/user/username');
+
+    if(res.status!==200){
+        console.log("failed to fetch username");
+    }
+    else{
+        console.log("fetched username");
+    }
+
+    const data=await res.json();
+    console.log(data);
+
+}
+
+displayname();

@@ -33,50 +33,52 @@
     
 
   } 
- /* 
-  const modal_btn=document.getElementById("sign-up");
-  const close_btn=document.getElementById('close_btn');
-  const modal=document.getElementById("modal");
-  const submitbtn=document.getElementById("submit_btn");
-  const username=document.getElementById("username");
-  const email=document.getElementById("email");
-  const password=document.getElementById("password");
+  let html="";
+  let hotellist=document.getElementById('hotellist')
+ 
+  const displaybooks = async() => {
 
+    const res=await fetch('api/user/hotel');
 
-  modal_btn.addEventListener('click',()=>{
-    console.log(modal);
-    modal.classList.add('active');
+    if(res.status!==200) {
+    console.log("Could not fetch data");
+    }
+    else{
+      console.log("fetched")
+    }
     
-  });
+    let data=await res.json();
+    //console.log(data.length)
+    console.log(data)
 
-  close_btn.addEventListener('click',()=>{
-    modal.classList.remove('active');
-  });
+    data.forEach(element => {
+      createhotel(element)
+    });
 
-  
 
-  submitbtn.addEventListener('click',submit);
+  };
+  function createhotel(element) {
+   console.log(element.price)
+    html+=`
+    <div class="box" id="${element.id}">
+                <img src="img/p-1.jpg" alt="image">
+                <div class="content">
+                    <h3><i class="fas fa-map-marker-alt"></i> ${element.hotelname}</h3>
+                    <p>Lorem Ipsum is simply dummy text of the farhan and typesetting industry.</p>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <div class="price"> starting from Rs ${element.price}</div>
+                    <a href="#" class="btn">book now</a>
+                </div>
+            </div>`;
 
-  function submit()
-  {
-     let xhr= new XMLHttpRequest();
-    let url="http://127.0.0.1:3000/api/user/signup";
-
-     xhr.open("POST",url,true);
-     xhr.setRequestHeader("Content-type", "application/json");
-
-     xhr.onreadystatechange= function ()
-     {
-       if(xhr.readyState ===4 && xhr.status===200 )
-       {
-         console.log(this.reponseText);
-         console.log(email.value);
-         console.log(username.value);
-         console.log(password.value);
-       }
-     };
-      var data =JSON.stringify({"email": email.value, "username": username.value, "password":password.value});
-
-      xhr.send(data);
+            hotellist.innerHTML=html;
     
-  }*/
+  }
+
+  displaybooks();

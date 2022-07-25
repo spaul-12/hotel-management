@@ -34,12 +34,18 @@ func SetupUserRoutes() {
 	USER.Get("/google/login", Login)
 	USER.Get("/callback", Callback)
 
+	USER.Get("/hotel", Gethotels)
+	USER.Get("/username", Getusername)
+
 	// privUser handles all the private user routes that requires authentication
 	privUser := USER.Group("/private")
 	privUser.Use(util.SecureAuth()) // middleware to secure all routes for this group
 	//privUser.Get("/user", GetUserData)
+
+	/* booking and cancellation routes */
 	privUser.Post("/addentry", private.CreateEntry)
 	privUser.Post("/deleteentry", private.DeleteEntry)
+
 	privUser.Get("/logout", Logout)
 
 }
@@ -243,6 +249,31 @@ func Callback(c *fiber.Ctx) error {
 	fmt.Println(username)
 	fmt.Println(email)
 
+	if count := db.DB.Where(&models.User{Username: username}).First(new(models.User)).RowsAffected; count <= 0 {
+		u := new(models.User)
+
+		password := []byte(email)
+
+		hashedPassword, err := bcrypt.GenerateFromPassword(password, 8)
+
+		if err != nil {
+			panic(err)
+		}
+		u.Username = username
+		u.Password = string(hashedPassword)
+		u.Email = email
+
+		if err := db.DB.Create(&u).Error; err != nil {
+			fmt.Println("insertion error")
+			return c.JSON(fiber.Map{
+				"error":   true,
+				"general": "Something went wrong, please try again later. 😕",
+			})
+		}
+	}
+
+	models.VerifiedUser = username
+
 	accessToken, refreshToken := util.GenerateTokens(username)
 	accessCookie, refreshCookie := util.GetAuthCookies(accessToken, refreshToken)
 
@@ -273,4 +304,39 @@ func Logout(c *fiber.Ctx) error {
 	c.ClearCookie("access_token", "refresh_token")
 
 	return c.Redirect("/", 301)
+}
+
+/* function to send username to the frontend */
+
+func Getusername(c *fiber.Ctx) error {
+	return c.JSON(models.VerifiedUser)
+}
+
+/* function to send hotels having free rooms to the frontend */
+
+func Gethotels(c *fiber.Ctx) error {
+
+	var hotelarray []models.Detail
+	var hotel models.Detail
+
+	rows, err := db.DB.Model(&models.Detail{}).Rows()
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer rows.Close()
+
+	/* iterations */
+	for rows.Next() {
+		db.DB.ScanRows(rows, &hotel)
+		if hotel.Roomfree > 0 {
+			hotelarray = append(hotelarray, hotel)
+		}
+	}
+
+	fmt.Println(hotelarray)
+
+	//return c.JSON(hotelarray)
+	return c.JSON(hotelarray)
 }

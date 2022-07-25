@@ -33,8 +33,7 @@ func CreateEntry(c *fiber.Ctx) error {
 			"status": "incorrect input",
 		})
 	}
-	//var name string = "hello"
-	//fmt.Println(models.VerifiedUser)
+
 	item := models.Booking{
 		User:      fmt.Sprint(models.VerifiedUser),
 		Id:        input.Id,
@@ -48,7 +47,7 @@ func CreateEntry(c *fiber.Ctx) error {
 	}
 
 	fmt.Println(item)
-	fmt.Println(input.Rooms)
+	//fmt.Println(input.Rooms)
 
 	var count uint64
 

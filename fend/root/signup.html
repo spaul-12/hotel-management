@@ -5,17 +5,118 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+ body{
+            background:url(bg.jpg);
+            background-size: cover;
+        }
+      .Signup{
+        position: absolute;
+        width: 500px;
+        top:45%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+       
+       
+      }
+      h1{
+        padding-left:150px;
+        color: white;
+        
+      
+      }
+      #i1{
+        margin:5px;
+        margin-bottom: 15px;
+        border:none;
+        border-bottom: 3px solid coral;
+        width: 80%;
+        outline:none;
+        background: none;
+        color:aliceblue;
+        padding: 10px;
+    }
+    #i2{
+        margin:5px;
+        margin-bottom: 15px;
+        border:none;
+        border-bottom: 3px solid coral;
+        width: 80%;
+        outline:none;
+        background: none;
+        color:aliceblue;
+        padding: 10px;
+      }
+    #i3{
+        margin:5px;
+        margin-bottom: 15px;
+        border:none;
+        border-bottom: 3px solid coral;
+        width: 80%;
+        outline:none;
+        background: none;
+        color:aliceblue;
+        padding: 10px;
+      }
+
+    #btn{
+       margin-top: 20px;
+        width: 80%;
+        background: none;
+        border-color: coral;
+        color: coral;
+        padding: 10px;
+        border-radius: 20px;
+        
+    }
+    #btn:hover{
+        border:none;
+        background: coral;
+        color:white;
+        transition: 0.8s;
+    }
+    .google{
+        margin-bottom: 40px;
+    }
+    .google img{
+        position: relative;
+        height: 40px;
+        top: 2.5px;
+    }
+    .google p{
+        background: rgb(7, 132, 235);
+        color:white;
+        width: 250px;
+        margin:10px;
+        margin-left: 80px;
+        
+    }
+    .google a{
+        position:relative;
+        top:-10px;
+        padding-left: 15px;
+        text-decoration: none;
+        color:white;
+    
+    }
+    </style>
 </head>
 <body>
-    <h1>SignUp</h1>
-    <form action="POST">
-        <input type="text" name="username" id="i1" placeholder="username">
-        <br>
-        <input type="password" name="password" id="i2" placeholder="password">
-        <br>
-        <input type="email" name="email" id="" placeholder="email">
-        <button type="submit">Submit</button>
-    </form>
+    <div class="Signup">
+
+        <h1>SignUp</h1>
+        <div class="google">
+            <p><img src="google.png" alt="" srcset=""> <a href="/api/user/google/login">Sign-up with Google</a>   </p>
+        </div>
+        <form action="POST">
+            <input type="text" name="username" id="i1" placeholder="username">
+            <br>
+            <input type="email" name="email" id="i3" placeholder="email">
+            <br>
+            <input type="password" name="password" id="i2" placeholder="password">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
     <script>
         const form = document.querySelector('form')
         form.addEventListener('submit', async (e) => {
