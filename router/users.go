@@ -46,6 +46,8 @@ func SetupUserRoutes() {
 	privUser.Post("/addentry", private.CreateEntry)
 	privUser.Post("/deleteentry", private.DeleteEntry)
 
+	privUser.Post("/createhotelcookie", private.Createhotelcookie)
+
 	privUser.Get("/logout", Logout)
 
 }
@@ -292,18 +294,17 @@ func Callback(c *fiber.Ctx) error {
 
 func Logout(c *fiber.Ctx) error {
 
-	/* cookie := new(fiber.Cookie)
-	cookie.Name = "access_token"
-	cookie.Expires = time.Now().Add(1 * time.Second)
+	c.ClearCookie()
+	c.Cookie(&fiber.Cookie{
+		Name:     "access_token",
+		Value:    "0000",
+		Expires:  time.Now().Add(1 * time.Second),
+		HTTPOnly: true,
+		Secure:   true,
+	})
 
-	c.Cookie(cookie)
+	return nil
 
-	c.Redirect("/", 301) */
-
-	fmt.Println("cleared cookie")
-	c.ClearCookie("access_token", "refresh_token")
-
-	return c.Redirect("/", 301)
 }
 
 /* function to send username to the frontend */

@@ -38,7 +38,7 @@
  
   const displaybooks = async() => {
 
-    const res=await fetch('api/user/hotel');
+    const res=await fetch('/api/user/hotel');
 
     if(res.status!==200) {
     console.log("Could not fetch data");

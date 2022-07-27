@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Website</title>
+    <link rel="stylesheet" href="tut.css">
+    <script src="https://kit.fontawesome.com/60aa7c3b31.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.0.0-beta.3/owl.carousel.min.js"></script>
+</head>
+<!-- navbar section -->
+
+<body>
+    <header class="navbar">
+        <div class="container">
+            <nav>
+                <a href="#">Hotel Name</a>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="navlinks">Home</a></li>
+                    <li><a href="#home" class="navlinks">Book</a></li>
+                    <li><a href="#home" class="navlinks">Amenities</a></li>
+                    <li><a href="#home" class="navlinks">Gallery</a></li>
+                    <li><a href="#home" class="navlinks">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- home section -->
+
+    <section class="home">
+        <div class="text">
+            <h3>Spend Your Holiday</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus saepe, nostrum eos ut voluptate
+                aperiam velit aut architecto at veritatis ipsam nobis, qui incidunt, praesentium quia placeat atque
+                consectetur corporis.</p>
+            <button class="contact">Contact Us</button>
+            <button class="info">More info</button>
+        </div>
+    </section>
+
+    <!-- book section -->
+
+
+    <section class="book">
+        <div class="booktext">
+            <h3>BOOK NOW</h3>
+        </div>
+        <div class="form">
+            <form action="" method="post" class="grid">
+                <input type="date" name="arrival_date" id="arrival" placeholder="Arrival Date">
+                <input type="date" name="departure_date" id="departure" placeholder="Departure Date">
+                <input type="number" name="Adult" id="adult" placeholder="Adults">
+                <input type="number" name="Children" id="children" placeholder="Children">
+                <input type="number" name="no_of_rooms" id="roomno" placeholder="Number of Rooms">
+                <div class="type">
+
+                    Room Type: Standard <input type="radio" name="roomtype" value="Standard" id="t1"> Deluxe <input
+                        type="radio" name="roomtype" value="Deluxe" id="t2"> Executive <input type="radio"
+                        name="roomtype" value="Executive" id="t3">
+                </div>
+
+            </form>
+            <button id="book_btn">BOOK</button>
+        </div>
+    </section>
+
+
+    <!-- About hotel -->
+    <section class="about">
+        <div class="containerflex">
+            <div class="left">
+                <div class="heading">
+                    <h3>Welcome</h3>
+                </div>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut nisi tempora expedita exercitationem
+                    recusandae, nobis numquam! Velit doloribus rem quia laborum quisquam asperiores numquam at id
+                    laboriosam? Pariatur, officiis. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Exercitationem totam sapiente odit quia veniam aliquid corrupti, et ut quasi a impedit maxime
+                    tempora ipsam adipisci reiciendis, ducimus minima pariatur quod? Lorem ipsum dolor sit, amet
+                    consectetur adipisicing elit. Corrupti ut doloribus illo voluptates repellat? Doloremque, dolore
+                    itaque accusantium rem numquam ipsum eos tempore? Saepe adipisci odio nostrum modi soluta
+                    tempore?Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio, doloribus quaerat
+                    quisquam cupiditate ad ipsa perferendis, et perspiciatis sit ab modi iure inventore? Quae blanditiis
+                    mollitia amet cupiditate impedit?</p>
+            </div>
+            <div class="right">
+                <img src="image/re.jpg" alt="" srcset="">
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities -->
+
+    <section class="amenities">
+        <div class="amenities_container">
+            <div class="amenities_left">
+                <div class="list">
+
+                    <ul>
+                        <li>24/7 Electricity</li>
+                        <li>24/7 CCTV Surveillance</li>
+                        <li>Parking Space available</li>
+                        <li>GYM</li>
+                        <li>Playing area for childrens</li>
+                        <li>Swimming Pool</li>
+                        <li>SPA and Massage</li>
+                        <li>Recreational Room</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="amenities_right">
+                <h2>AMENITIES</h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms -->
+
+    <section class="rooms">
+        <div class="container_top">
+            <div class="heading">
+                <h1>EXPLORE </h1>
+                <h2>OUR ROOMS</h2>
+            </div>
+
+            <div class="content_mtop">
+                <div class="owl-carousel owl-carousel1 owl-theme">
+                    <div class="item">
+                        <div class="image">
+
+                            <img src="image/r1.jpg" alt="">
+                        </div>
+                        <div class="image_text">
+                            <h2>Standard Room</h2>
+                            <h2>Rs 8000</h2>
+                        </div>
+                    </div>
+                    <div class="item" id="s2">
+                        <div class="image">
+                            
+                            <img src="image/g3.jpg" alt="">
+                        </div>
+                        <div class="image_text">
+                            <h2>Standard Room</h2>
+                            <h2>Rs 8000</h2>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="image">
+
+                            <img src="image/r2.jpg" alt="">
+                        </div>
+                        <div class="image_text">
+                            <h2>Deluxe Room</h2>
+                            <h2>Rs 9000</h2>
+                        </div>
+                    </div>
+                    <div class="item" id="s3">
+                        <div class="image">
+                            
+                            <img src="image/g7.jpg" alt="">
+                        </div>
+                        <div class="image_text">
+                            <h2>Deluxe Room</h2>
+                            <h2>Rs 9000</h2>
+                        </div>
+                    </div>
+                    <div class="item" id="s4">
+                        <div class="image">
+
+                            <img src="image/g6.jpg" alt="">
+                        </div>
+                        <div class="image_text">
+                            <h2>Executive Room</h2>
+                            <h2>Rs 10000</h2>
+                        </div>
+                    </div>
+                    <div class="item" id="s5">
+                        <div class="image">
+                            
+                            <img src="image/g8.jpg" alt="">
+                        </div>
+                        <div class="image_text">
+                            <h2>Executive Room</h2>
+                            <h2>Rs 10000</h2> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 40,
+            nav:false,
+            dots: true,
+            navText: ["<i class='fas fa-chevron-left'></i>", "<i class='fas fa-chevron-right'></i>"],
+            responsive: {
+                0: {
+                    items: 1
+                },
+                768: {
+                    items: 2,
+                    margin: 10
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    </script>
+
+
+<section class="map_top">
+    <div class="location">
+        <h3>Our Location</h3>
+    </div>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d14131.036667732067!2d85.32395955!3d27.69383745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2snp!4v1637755481449!5m2!1sen!2snp" width="600" height="450" style="border:0;"
+      allowfullscreen="" loading="lazy"></iframe>
+  </section>
+
+
+  <!-- Footer -->
+
+  <footer>
+    <div class="container grid top">
+      <div class="box">
+        <img src="https://img.icons8.com/external-flatart-icons-flat-flatarticons/48/000000/external-hotel-hotel-services-and-city-elements-flatart-icons-flat-flatarticons-1.png" />
+        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur odit alias, vero porro assumenda voluptatem ullam quasi laborum incidunt laudantium eveniet facilis quae quis saepe vel minima asperiores, impedit pariatur!</p>
+
+        <p>Accepted payment methods</p>
+        <div class="payment grid">
+          <img src="https://img.icons8.com/color/48/000000/visa.png" />
+          <img src="https://img.icons8.com/color/48/000000/mastercard.png" />
+          <img src="https://img.icons8.com/color-glass/48/000000/paypal.png" />
+          <img src="https://img.icons8.com/fluency/48/000000/amex.png" />
+        </div>
+      </div>
+
+      <div class="box">
+        <h3>Recent News</h3>
+
+        <ul>
+          <li>Our Secret Island Boat Tour Is Just for You</li>
+          <li>Chill and Escape in Our Natural Shelters</li>
+          <li>September in Luviana Hotel</li>
+          <li>Live Music Concerts at Luviana</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h3>For Customers</h3>
+        <ul>
+          <li>About Luviana</li>
+          <li>Customer Care/Help</li>
+          <li>Corporate Accounts</li>
+          <li>Financial Information</li>
+          <li>Terms & Conditions</li>
+        </ul>
+      </div>
+
+      <div class="box">
+        <h3>Contact Us</h3>
+
+        <ul>
+          <li>3015 Grand Ave, Cocount Grove, Merrick Way FL 123456</li>
+          <li><i class="far fa-envelope"></i>demoexample@gmail.com </li>
+          <li><i class="far fa-phone-alt"></i>123 456 7898 </li>
+          <li><i class="far fa-phone-alt"></i>123 456 7898 </li>
+          <li><i class="far fa-comments"></i>24/ 7 Customer Services </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="tut.js"></script>
+
+</body>
+
+</html>

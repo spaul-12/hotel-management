@@ -5,6 +5,7 @@ import (
 	//"time"
 
 	"fmt"
+	"strconv"
 
 	db "github.com/task/database"
 	"github.com/task/models"
@@ -120,4 +121,52 @@ func DeleteEntry(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusOK).JSON(fiber.Map{
 		"status": "cancellation successfull",
 	})
+}
+
+func Createhotelcookie(c *fiber.Ctx) error {
+	type iteminput struct {
+		Id string `json:"hotelid"`
+	}
+	input := new(iteminput)
+
+	if err := c.BodyParser(input); err != nil {
+		return c.JSON(fiber.Map{
+			"error": true,
+			"msg":   "cannot parse data",
+		})
+	}
+
+	c.Cookie(&fiber.Cookie{
+		Name:     "hotel_id",
+		Value:    fmt.Sprint(input.Id),
+		HTTPOnly: true,
+		Secure:   true,
+	})
+
+	return c.JSON(fiber.Map{
+		"error": false,
+		"msg":   "cookie successfully created",
+	})
+
+}
+
+func Showhotel(c *fiber.Ctx) error {
+	id := c.Cookies("hotel_id")
+	hotelid, err := strconv.Atoi(id)
+
+	if err != nil {
+		return c.JSON(fiber.Map{
+			"error": true,
+			"msg":   "cannot convert hotel cookie",
+		})
+	}
+
+	var hotel models.Detail
+
+	if res := db.DB.Table("details").Where("id =?", hotelid).Find(&hotel); res.RowsAffected <= 0 {
+		fmt.Println("hotel not found")
+		return nil
+	}
+
+	return c.JSON(hotel)
 }
