@@ -47,6 +47,7 @@ func SetupUserRoutes() {
 	privUser.Post("/deleteentry", private.DeleteEntry)
 
 	privUser.Post("/createhotelcookie", private.Createhotelcookie)
+	privUser.Get("/showhotel", private.Showhotel)
 
 	privUser.Get("/logout", Logout)
 

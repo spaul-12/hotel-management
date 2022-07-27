@@ -5,7 +5,6 @@ import (
 	//"time"
 
 	"fmt"
-	"strconv"
 
 	db "github.com/task/database"
 	"github.com/task/models"
@@ -24,7 +23,7 @@ func CreateEntry(c *fiber.Ctx) error {
 		ExitDate  string `json:"exitdate"`
 		Roomtype  string `json:"roomtype"`
 		Rooms     uint64 `json:"roomno"` //no of rooms
-		Price     uint64 `json:"price"`
+		//Price     uint64 `json:"price"`
 	}
 
 	input := new(iteminput)
@@ -35,6 +34,11 @@ func CreateEntry(c *fiber.Ctx) error {
 		})
 	}
 
+	var hotel models.Detail
+
+	response := db.DB.Where("id =?", input.Id).Find(&hotel)
+	response.Scan(&hotel)
+
 	item := models.Booking{
 		User:      fmt.Sprint(models.VerifiedUser),
 		Id:        input.Id,
@@ -44,7 +48,7 @@ func CreateEntry(c *fiber.Ctx) error {
 		ExitDate:  input.ExitDate,
 		Roomtype:  input.Roomtype,
 		Rooms:     input.Rooms,
-		Price:     input.Price,
+		Price:     ((hotel.Price) * (input.Rooms)),
 	}
 
 	fmt.Println(item)
@@ -152,18 +156,18 @@ func Createhotelcookie(c *fiber.Ctx) error {
 
 func Showhotel(c *fiber.Ctx) error {
 	id := c.Cookies("hotel_id")
-	hotelid, err := strconv.Atoi(id)
+	//hotelid, err := strconv.Atoi(id)
 
-	if err != nil {
+	/*if err != nil {
 		return c.JSON(fiber.Map{
 			"error": true,
 			"msg":   "cannot convert hotel cookie",
 		})
-	}
+	}*/
 
 	var hotel models.Detail
 
-	if res := db.DB.Table("details").Where("id =?", hotelid).Find(&hotel); res.RowsAffected <= 0 {
+	if res := db.DB.Table("details").Where("id =?", id).Find(&hotel); res.RowsAffected <= 0 {
 		fmt.Println("hotel not found")
 		return nil
 	}
