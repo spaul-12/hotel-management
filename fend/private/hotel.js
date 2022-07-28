@@ -69,6 +69,7 @@ function details(){
 
             // Print received data from server
             console.log(this.responseText);
+            alert("booking successful");
             
 
         }

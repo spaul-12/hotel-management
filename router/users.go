@@ -48,6 +48,7 @@ func SetupUserRoutes() {
 
 	privUser.Post("/createhotelcookie", private.Createhotelcookie)
 	privUser.Get("/showhotel", private.Showhotel)
+	privUser.Get("/profile", Profiledetails)
 
 	privUser.Get("/logout", Logout)
 
@@ -340,5 +341,29 @@ func Gethotels(c *fiber.Ctx) error {
 	fmt.Println(hotelarray)
 
 	//return c.JSON(hotelarray)
+	return c.JSON(hotelarray)
+}
+
+func Profiledetails(c *fiber.Ctx) error {
+	var hotelarray []models.Booking
+	var hotel models.Booking
+
+	rows, err := db.DB.Model(&models.Booking{}).Rows()
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		db.DB.ScanRows(rows, &hotel)
+		if hotel.User == models.VerifiedUser {
+			hotelarray = append(hotelarray, hotel)
+		}
+	}
+
+	//fmt.Println(hotelarray)
+
 	return c.JSON(hotelarray)
 }

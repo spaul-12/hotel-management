@@ -85,10 +85,10 @@ logout.addEventListener('click', async(e)=>{
 
         const data=await res
         console.log(data)
-       /* if(data.redirect)
+        if(data.redirect)
         {
-            location.assign(data.url)
-        }*/
+            window.location.href="/";
+        }
     }catch(e)
     {
         console.log(e)
