@@ -1,4 +1,5 @@
 var id;
+
 const navbar=document.getElementById("navinfo");
 
 let displayhotel = async() => {

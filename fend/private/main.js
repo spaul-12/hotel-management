@@ -72,7 +72,7 @@ xhr.send(data);
 
 /* ----------------logout function------------------- */
 
-const logout=document.getElementById("logout");
+/*const logout=document.getElementById("logout");
 logout.addEventListener('click', async(e)=>{
     e.preventDefault()
 
@@ -93,7 +93,7 @@ logout.addEventListener('click', async(e)=>{
     {
         console.log(e)
     }
-})
+})*/
 
 
 
@@ -149,7 +149,7 @@ const displayname= async() => {
     const data=await res.json();
     console.log(data);
 
-    var links=document.getElementsByClassName("links");
+    var links=document.getElementById("link");
     var l=document.createElement("li");
     var textnode = document.createTextNode(JSON.stringify(data));
     l.appendChild(textnode)
@@ -163,7 +163,7 @@ displayname();
 let html="";
   let hotellist=document.getElementById('hotellist')
  
-  const displaybooks = async() => {
+  const displayhotels = async() => {
 
     const res=await fetch('/api/user/hotel');
 
@@ -188,7 +188,7 @@ let html="";
    console.log(element.price)
     html+=`
     <div class="box" ">
-                <img src="img/p-1.jpg" alt="image">
+                <img src="img/${element.hotelid}.jpg" alt="image">
                 <div class="content">
                     <h3><i class="fas fa-map-marker-alt"></i> ${element.hotelname}</h3>
                     <p>Lorem Ipsum is simply dummy text of the farhan and typesetting industry.</p>
@@ -200,7 +200,7 @@ let html="";
                         <i class="far fa-star"></i>
                     </div>
                     <div class="price"> starting from Rs ${element.price}</div>
-                    <a href="#" class="btn" id="${element.hotelid}" onClick="Hotelpage(this.id)">book now</a>
+                    <a href="#" class="btn" id="${element.hotelid}" onClick="Hotelpage(this.id)">View Deal</a>
                 </div>
             </div>`;
 
@@ -208,7 +208,7 @@ let html="";
     
   }
 
-  displaybooks();
+  displayhotels();
 
     async function Hotelpage(clicked_id) {
         const response = await fetch("/api/user/private/createhotelcookie", {

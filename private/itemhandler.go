@@ -42,6 +42,7 @@ func CreateEntry(c *fiber.Ctx) error {
 	item := models.Booking{
 		User:      fmt.Sprint(models.VerifiedUser),
 		Id:        input.Id,
+		Name:      hotel.Name,
 		Adult:     input.Adult,
 		Children:  input.Children,
 		EntryDate: input.EntryDate,

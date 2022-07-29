@@ -60,8 +60,8 @@
   function createhotel(element) {
    console.log(element.price)
     html+=`
-    <div class="box" id="${element.id}">
-                <img src="img/p-1.jpg" alt="image">
+    <div class="box" id="${element.hotelid}">
+                <img src="img/${element.hotelid}.jpg" alt="image">
                 <div class="content">
                     <h3><i class="fas fa-map-marker-alt"></i> ${element.hotelname}</h3>
                     <p>Lorem Ipsum is simply dummy text of the farhan and typesetting industry.</p>

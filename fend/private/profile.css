@@ -3,10 +3,19 @@
     margin:0%;
     box-sizing: border-box;
 }
-
+.navbar h2{
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#333;
+    padding-top: 10px;
+}
+.navbar nav{
+    box-shadow:0px 4px 8px 0px grey ;
+    height:60px;
+}
 .main{
     margin-top: 2%;
-    margin-left: 29%;
+    margin-left: 20%;
     font-size: 28px;
     padding:0 10px;
     width:58%;
@@ -24,14 +33,37 @@
     background-color: #fff;
     border-radius: 18px;
     box-shadow: 1px 1px 8px 0 gray;
-    height: auto;
+    height: 200px;;
     margin-bottom: 20px;
     padding:20px 0 20px 50px;
 }
 
 .main .card table{
+    position: relative;
     border:none;
     font-size: 16px;
     height: 270px;
     width: 80%;
+    height: 80px;
+    font-size: 20px;
+    
+   
+}
+.btn{
+    outline:none;
+    border:none;
+    background-color: transparent;
+    border:1px solid blue;
+    border-radius: 5px;
+    padding:10px;
+    cursor: pointer;
+}
+.btn:hover{
+    background-color: rgb(68, 142, 212);
+    border:none;
+    color: white;
+    transition: 0.5s;
+}
+.card_body p{
+  font-size: 25px;
 }
