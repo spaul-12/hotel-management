@@ -49,6 +49,7 @@ func SetupUserRoutes() {
 	privUser.Post("/createhotelcookie", private.Createhotelcookie)
 	privUser.Get("/showhotel", private.Showhotel)
 	privUser.Get("/profile", Profiledetails)
+	privUser.Get("/email", Getmail)
 
 	privUser.Get("/logout", Logout)
 
@@ -366,4 +367,14 @@ func Profiledetails(c *fiber.Ctx) error {
 	//fmt.Println(hotelarray)
 
 	return c.JSON(hotelarray)
+}
+
+func Getmail(c *fiber.Ctx) error {
+
+	var mail models.User
+
+	res := db.DB.Where("Username = ?", models.VerifiedUser).Find(&mail)
+	res.Scan(&mail)
+
+	return c.JSON(mail.Email)
 }

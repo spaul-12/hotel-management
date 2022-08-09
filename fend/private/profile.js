@@ -1,5 +1,28 @@
 
     let html="";
+    var mail;
+   
+    let Getemail = async() => {
+        let res=await fetch("/api/user/private/email");
+        
+        if(res.status!==200) {
+        console.log("failed to get email");
+    } else {
+        console.log("fetched email")
+    }
+    data= await res.json();
+    console.log(data);
+    mail=data;
+    console.log(mail);
+    }
+
+    //Getemail();
+
+
+
+
+
+
     let booking_card=document.getElementById("booking_card");
 let Displayprofile = async() => {
 
@@ -26,7 +49,7 @@ let Displayprofile = async() => {
             <tr>
                 <td>Email</td>
                 <td>:</td>
-                <td>Hello@gmail.com</td>
+                <td>${mail}</td>
             </tr>
         </tbody>
     </table>

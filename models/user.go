@@ -32,6 +32,8 @@ type Detail struct {
 	Roomfree uint64 `json:"roomfree"`
 	Food     string `json:"food"`
 	Price    uint64 `json:"price"`
+	Standard uint64 `json:"standard_price"`
+	Deluxe   uint64 `json:"deluxe_price"`
 }
 
 // booking struct contains the details of hotel booked by the user
