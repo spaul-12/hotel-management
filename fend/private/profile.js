@@ -11,21 +11,17 @@
         console.log("fetched email")
     }
     data= await res.json();
-    console.log(data);
+    //console.log(data);
     mail=data;
     console.log(mail);
     }
 
-    //Getemail();
-
-
-
-
-
-
+    
+    
     let booking_card=document.getElementById("booking_card");
-let Displayprofile = async() => {
-
+    let Displayprofile = async() => {
+        
+        Getemail();
     let res= await fetch("/api/user/private/profile");
 
     if(res.status!==200) {

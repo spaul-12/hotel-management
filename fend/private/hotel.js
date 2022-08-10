@@ -13,7 +13,7 @@ let displayhotel = async() => {
 
     let data=await res.json();
     id=data.hotelid;
-     let html="";
+     html="";
     html+=`
     <div class="container" ">
             <nav>
@@ -30,6 +30,34 @@ let displayhotel = async() => {
         
     
     navbar.innerHTML=html;
+
+    html="";
+    
+   let price_id=document.getElementById("p1");
+   html+=`<h2>Standard Room</h2>
+   <h2>Rs ${data.standard_price}</h2>`;
+   price_id.innerHTML=html;
+  
+   price_id=document.getElementById("p2");
+   html=`<h2>Standard Room</h2>
+   <h2>Rs ${data.standard_price}</h2>`;
+   price_id.innerHTML=html;
+   price_id=document.getElementById("p3");
+   html=`<h2>Deluxe Room</h2>
+   <h2>Rs ${data.deluxe_price}</h2>`;
+   price_id.innerHTML=html;
+   price_id=document.getElementById("p4");
+   html=`<h2>Deluxe Room</h2>
+   <h2>Rs ${data.deluxe_price}</h2>`;
+   price_id.innerHTML=html;
+   price_id=document.getElementById("p5");
+   html=`<h2>Executive Room</h2>
+   <h2>Rs ${data.price}</h2>`;
+   price_id.innerHTML=html;
+   price_id=document.getElementById("p6");
+   html=`<h2>Executive Room</h2>
+   <h2>Rs ${data.price}</h2>`;
+   price_id.innerHTML=html;
    
 
 }

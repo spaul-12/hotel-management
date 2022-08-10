@@ -39,8 +39,20 @@ func CreateEntry(c *fiber.Ctx) error {
 	response := db.DB.Where("id =?", input.Id).Find(&hotel)
 	response.Scan(&hotel)
 
+	var price uint64
+
+	if input.Roomtype == "Deluxe" {
+		price = hotel.Deluxe
+	} else if input.Roomtype == "Standard" {
+		price = hotel.Standard
+	} else {
+		price = hotel.Price
+	}
+	verified_user := c.Cookies("username")
+	fmt.Println(verified_user)
+
 	item := models.Booking{
-		User:      fmt.Sprint(models.VerifiedUser),
+		User:      verified_user,
 		Id:        input.Id,
 		Name:      hotel.Name,
 		Adult:     input.Adult,
@@ -49,7 +61,7 @@ func CreateEntry(c *fiber.Ctx) error {
 		ExitDate:  input.ExitDate,
 		Roomtype:  input.Roomtype,
 		Rooms:     input.Rooms,
-		Price:     ((hotel.Price) * (input.Rooms)),
+		Price:     (price * (input.Rooms)),
 	}
 
 	fmt.Println(item)

@@ -200,7 +200,15 @@ func LoginUser(c *fiber.Ctx) error {
 		"refresh_token": refreshToken,
 	})*/
 
-	models.VerifiedUser = input.Identity
+	c.Cookie(&fiber.Cookie{
+		Name:     "username",
+		Value:    u.Username,
+		HTTPOnly: true,
+		Secure:   true,
+	})
+	models.VerifiedUser = c.Cookies("username")
+	fmt.Println(models.VerifiedUser)
+
 	return c.Redirect("/api/user/private/", 301)
 }
 
@@ -339,7 +347,7 @@ func Gethotels(c *fiber.Ctx) error {
 		}
 	}
 
-	fmt.Println(hotelarray)
+	//fmt.Println(hotelarray)
 
 	//return c.JSON(hotelarray)
 	return c.JSON(hotelarray)

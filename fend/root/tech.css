@@ -236,6 +236,12 @@
     border:none;
     color:white;
 }
+.container_grid_top{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+
+
 
 footer h3 {
     margin-bottom: 20px;

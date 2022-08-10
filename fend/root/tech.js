@@ -60,7 +60,7 @@
   function createhotel(element) {
    console.log(element.price)
     html+=`
-    <div class="box" id="${element.hotelid}">
+    <div class="box" >
                 <img src="img/${element.hotelid}.jpg" alt="image">
                 <div class="content">
                     <h3><i class="fas fa-map-marker-alt"></i> ${element.hotelname}</h3>
@@ -73,7 +73,7 @@
                         <i class="far fa-star"></i>
                     </div>
                     <div class="price"> starting from Rs ${element.price}</div>
-                    <a href="#" class="btn">book now</a>
+                    <a  class="btn" id="${element.hotelid}" onClick="login()">book now</a>
                 </div>
             </div>`;
 
@@ -82,3 +82,11 @@
   }
 
   displaybooks();
+
+  function login(){
+    
+    console.log("inside login");
+    alert("Please login to continue");
+    window.location.href="signin.html";
+  }
+  
