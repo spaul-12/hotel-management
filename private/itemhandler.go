@@ -116,13 +116,16 @@ func DeleteEntry(c *fiber.Ctx) error {
 			"status": "incorrect input",
 		})
 	}
+
 	fmt.Println(input.Id)
+	verified := c.Cookies("username")
 
 	var amount uint64
-	db.DB.Table("bookings").Select("rooms").Where("\"user\" = ? AND Id = ?", models.VerifiedUser, input.Id).Scan(&amount)
+
+	db.DB.Table("bookings").Select("rooms").Where("\"user\" = ? AND Id = ?", verified, input.Id).Scan(&amount)
 	fmt.Println(amount)
 
-	if res := db.DB.Where("\"user\" = ? AND Id = ?", models.VerifiedUser, input.Id).Delete(&models.Booking{}); res.RowsAffected <= 0 {
+	if res := db.DB.Where("\"user\" = ? AND Id = ?", verified, input.Id).Delete(&models.Booking{}); res.RowsAffected <= 0 {
 		return c.JSON(fiber.Map{
 			"msg": "invalid input",
 		})

@@ -20,10 +20,10 @@ let displayhotel = async() => {
                 <a href="#" id="hotelname" class="${data.hotelid}">${data.hotelname}</a>
                 <ul class="nav-menu">
                     <li><a href="#home" class="navlinks">Home</a></li>
-                    <li><a href="#home" class="navlinks">Book</a></li>
-                    <li><a href="#home" class="navlinks">Amenities</a></li>
-                    <li><a href="#home" class="navlinks">Gallery</a></li>
-                    <li><a href="#home" class="navlinks">Contact</a></li>
+                    <li><a href="#book_form" class="navlinks">Book</a></li>
+                    <li><a href="#amenities_block" class="navlinks">Amenities</a></li>
+                    <li><a href="#carousel" class="navlinks">Gallery</a></li>
+                    <li><a href="#contact" class="navlinks">Contact</a></li>
                 </ul>
             </nav>
         </div>`;

@@ -30,6 +30,7 @@ func SetupUserRoutes() {
 	USER.Post("/signup", CreateUser)              // Sign Up a user
 	USER.Post("/signin", LoginUser)               // Sign In a user
 	USER.Get("/get-access-token", GetAccessToken) // returns a new access_token
+	USER.Get("/welcome", Welcome)
 
 	USER.Get("/google/login", Login)
 	USER.Get("/callback", Callback)
@@ -207,6 +208,7 @@ func LoginUser(c *fiber.Ctx) error {
 		Secure:   true,
 	})
 	models.VerifiedUser = c.Cookies("username")
+
 	fmt.Println(models.VerifiedUser)
 
 	return c.Redirect("/api/user/private/", 301)
@@ -357,6 +359,7 @@ func Profiledetails(c *fiber.Ctx) error {
 	var hotelarray []models.Booking
 	var hotel models.Booking
 
+	verified := c.Cookies("username")
 	rows, err := db.DB.Model(&models.Booking{}).Rows()
 
 	if err != nil {
@@ -367,12 +370,12 @@ func Profiledetails(c *fiber.Ctx) error {
 
 	for rows.Next() {
 		db.DB.ScanRows(rows, &hotel)
-		if hotel.User == models.VerifiedUser {
+		if hotel.User == verified {
 			hotelarray = append(hotelarray, hotel)
 		}
 	}
 
-	//fmt.Println(hotelarray)
+	fmt.Println(hotelarray)
 
 	return c.JSON(hotelarray)
 }
@@ -380,9 +383,27 @@ func Profiledetails(c *fiber.Ctx) error {
 func Getmail(c *fiber.Ctx) error {
 
 	var mail models.User
-
-	res := db.DB.Where("Username = ?", models.VerifiedUser).Find(&mail)
+	verified := c.Cookies("username")
+	res := db.DB.Where("Username = ?", verified).Find(&mail)
 	res.Scan(&mail)
 
-	return c.JSON(mail.Email)
+	return c.JSON(mail)
+}
+
+// check for access token
+
+func Welcome(c *fiber.Ctx) error {
+	fmt.Println("hello")
+	token := c.Cookies("access_token", "")
+
+	fmt.Println(token)
+
+	if token != "" {
+		fmt.Println("token is present")
+		return c.Redirect("/api/user/private/", 301)
+	} else {
+		fmt.Println("token is absent")
+		return c.Redirect("/", 301)
+	}
+
 }

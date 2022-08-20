@@ -236,6 +236,14 @@
     border:none;
     color:white;
 }
+footer{
+    margin-top: 30px;
+}
+.container_grid_top{
+    
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
 
 footer h3 {
     margin-bottom: 20px;
